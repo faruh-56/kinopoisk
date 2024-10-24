@@ -77,14 +77,23 @@ async function fetchData(title) {
         <div class="card-body">
             <h5 class="card-title">${movie.Title}</h5>
             <p class="card-text">${movie.Plot}</p>
-            <a
-                href="#"
-                class="btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-                >
-                Подробнее
-            </a>
+            <div style>
+                <a
+                    href="#"
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    >
+                    Подробнее
+                </a>
+                <a
+                    href="#"
+                    class="btn btn-primary"
+                    id="add-fav-btn"
+                    >
+                    Добавить в избранное
+                </a>
+            </div>
         </div>
     </div>`
     
@@ -92,7 +101,22 @@ async function fetchData(title) {
     console.log(searchResultsContainer.children)
     
     searchResultsContainer.insertAdjacentHTML('beforeend', cardElementTemplate)
-  })
+
+    const addFavButton = document.getElementById('add-fav-btn')
+    addFavButton.addEventListener('click', () => {
+
+        if(localStorage.getItem('favMovies') === null) {
+            const favMoviesList = []
+            favMoviesList.push(movie)
+            localStorage.setItem('favMovies', JSON.stringify(favMoviesList))
+            return
+        }
+
+        const favMoviesList = JSON.parse(localStorage.getItem('favMovies'))
+        favMoviesList.push(movie)
+        localStorage.setItem('favMovies', JSON.stringify(favMoviesList))
+    })
+})
   
   
   const ModalElement = document.getElementById('exampleModal')
@@ -122,5 +146,30 @@ async function fetchData(title) {
   // console.log(a[2]);
   // console.log(a.at(0));
   
-  
+  localStorage.setItem('myBirthDate', '26.11.2005')
+  const myPhoneNumber = ['998978143400']
+  localStorage.setItem('myPhoneNumber', myPhoneNumber)
 
+  const myData = {
+    age: 16,
+    sex: 'male',
+    faceitElo: 2568
+  }
+  localStorage.setItem('myData', JSON.stringify(myData))
+
+  const cs = {
+    premier: 20000,
+    experience: '4k hours',
+    faceitElo: 2568,
+    teams: ['BAZZ', 'Wakanda', 'Refresh']
+  }
+
+  localStorage.setItem('cs', JSON.stringify(cs))
+
+  let myDataJSON = localStorage.getItem('myData')
+  let myDatas = JSON.parse(myDataJSON)
+  myDatas.sex[1]
+  console.log(myDatas.sex);
+
+   
+  
